@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"time"
 )
 
 // Whether a folder is a known game's save location on this device, without
@@ -16,6 +17,10 @@ import (
 // Steam game. So a new device still fills itself in, saves arriving before the
 // game is first played there, while the peer still chooses no folder.
 
+// catalogueWait is how long a check waits for a newer catalogue to be indexed
+// before answering from the one it had. It is asked while a peer waits.
+const catalogueWait = 2 * time.Second
+
 // CatalogueSaveLocation reports whether path is a save location the catalogue
 // gives the game called name, or with Steam app ID appID, on this device:
 // exactly the folder a scan would offer for that game once it had saved there.
@@ -23,7 +28,7 @@ func (sc *Scanner) CatalogueSaveLocation(name, appID, path string) bool {
 	if sc.CacheFile == "" || strings.TrimSpace(path) == "" {
 		return false
 	}
-	games := sc.loadManifestIndex()
+	games := sc.manifestIndex(catalogueWait)
 	if len(games) == 0 {
 		return false
 	}
