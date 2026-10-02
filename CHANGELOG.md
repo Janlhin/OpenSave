@@ -3,6 +3,33 @@
 All notable changes to OpenSave are documented here. This project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **Games from your other devices set themselves up again.** 2.4.1 stopped
+  another device from choosing folders on this one, and in doing so made
+  many games wait on Home for you to pick a folder. Now a game arriving from
+  another device is tracked by itself wherever this device can tell the
+  folder is that game's save: where the save catalogue or Steam says the game
+  keeps its saves here, even before you have played it (so a new PC fills
+  itself in, saves in place before first launch), in an emulator's save
+  folder, or a folder a scan has seen. The other device still chooses
+  nothing.
+- **Trust your own devices to choose folders.** For a folder this device
+  can't recognise, such as one you tracked by hand on the other device, the
+  game still waits on Home for you to place it. On Devices, "Trust it to
+  choose folders" lets one of your own devices decide instead, as every
+  device could before 2.4.1 (`opensave peers trust <device> on`). It is off
+  until you turn it on, asks first, and goes when the device is unpaired.
+
+### Fixed
+
+- **A game waiting for a folder no longer stays on Home once it syncs.** And
+  when a game is offered, OpenSave now looks for its folder straight away
+  rather than at the next hourly scan, so a game you have already played on
+  this device starts syncing within seconds.
+
 ## [2.4.1] — 2026-10-02
 
 A security update: please install it on every device. A paired device could
